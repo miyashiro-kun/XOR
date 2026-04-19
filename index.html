@@ -1,0 +1,54 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enkripsi Sederhana</title>
+</head>
+<body>
+
+<h2>Enkripsi / Dekripsi XOR</h2>
+
+<textarea id="text" placeholder="Masukkan teks"></textarea><br><br>
+<input id="key" placeholder="Kunci (contoh: IAN)"><br><br>
+
+<button onclick="encrypt()">Enkripsi</button>
+<button onclick="decrypt()">Dekripsi</button>
+
+<p>Hasil:</p>
+<textarea id="result"></textarea>
+
+<script>
+function xorProcess(text, key) {
+  let result = '';
+  for (let i = 0; i < text.length; i++) {
+    let charCode = text.charCodeAt(i);
+    let keyCode = key.charCodeAt(i % key.length);
+    result += String.fromCharCode(charCode ^ keyCode);
+  }
+  return result;
+}
+
+function encrypt() {
+  let text = document.getElementById("text").value;
+  let key = document.getElementById("key").value;
+
+  let encrypted = xorProcess(text, key);
+  let base64 = btoa(encrypted);
+
+  document.getElementById("result").value = base64;
+}
+
+function decrypt() {
+  let text = document.getElementById("text").value;
+  let key = document.getElementById("key").value;
+
+  let decoded = atob(text);
+  let decrypted = xorProcess(decoded, key);
+
+  document.getElementById("result").value = decrypted;
+}
+</script>
+
+</body>
+</html>
+```
